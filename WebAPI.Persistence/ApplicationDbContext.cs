@@ -11,9 +11,6 @@ namespace WebAPI.Persistence
 {
     public class ApplicationDbContext : DbContext
     {
-        public ApplicationDbContext(DbContextOptions options) : base(options)
-        {
-        }
 
         public DbSet<Curso>? Cursos { get; set; }
         public DbSet<Instructor>? Instructores { get; set; }
@@ -24,7 +21,7 @@ namespace WebAPI.Persistence
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Data Source=LocalDataBase.db")
+            optionsBuilder.UseSqlServer("Data Source=(localdb)\\mssqllocaldb;Initial Catalog=dbclean;Integrated Security=True")
                 .LogTo(Console.WriteLine,
                 new[] { DbLoggerCategory.Database.Command.Name },
                 Microsoft.Extensions.Logging.LogLevel.Information
