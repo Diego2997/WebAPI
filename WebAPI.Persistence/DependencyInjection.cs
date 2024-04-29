@@ -20,7 +20,7 @@ namespace WebAPI.Persistence
                 Microsoft.Extensions.Logging.LogLevel.Information
                 ).EnableSensitiveDataLogging();
 
-                opt.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+                opt.UseSqlServer(configuration.GetConnectionString("SqlServerDatabase"), b => b.MigrationsAssembly("WebAPI.Persistence"));
             });
 
             return services;

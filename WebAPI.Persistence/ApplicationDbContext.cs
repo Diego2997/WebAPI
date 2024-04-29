@@ -15,6 +15,11 @@ namespace WebAPI.Persistence
     public class ApplicationDbContext : IdentityDbContext<AppUser>
     {
 
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
+        {
+            
+        }
+
         public DbSet<Curso>? Cursos { get; set; }
         public DbSet<Instructor>? Instructores { get; set; }
         public DbSet<Precio> Precios { get; set; }
@@ -24,11 +29,8 @@ namespace WebAPI.Persistence
 
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         //{
-        //    optionsBuilder.UseSqlServer("Data Source=(localdb)\\mssqllocaldb;Initial Catalog=dbclean;Integrated Security=True")
-        //        .LogTo(Console.WriteLine,
-        //        new[] { DbLoggerCategory.Database.Command.Name },
-        //        Microsoft.Extensions.Logging.LogLevel.Information
-        //        ).EnableSensitiveDataLogging();
+        //    optionsBuilder.UseSqlServer("Data Source=(localdb)\\mssqllocaldb;Initial Catalog=dbclean;Integrated Security=True");
+                
         //} //ESTO SE HARIA SI NO FUERA APP DE CAPAS
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
