@@ -22,14 +22,14 @@ namespace WebAPI.Persistence
 
 
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer("Data Source=(localdb)\\mssqllocaldb;Initial Catalog=dbclean;Integrated Security=True")
-                .LogTo(Console.WriteLine,
-                new[] { DbLoggerCategory.Database.Command.Name },
-                Microsoft.Extensions.Logging.LogLevel.Information
-                ).EnableSensitiveDataLogging();
-        }
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.UseSqlServer("Data Source=(localdb)\\mssqllocaldb;Initial Catalog=dbclean;Integrated Security=True")
+        //        .LogTo(Console.WriteLine,
+        //        new[] { DbLoggerCategory.Database.Command.Name },
+        //        Microsoft.Extensions.Logging.LogLevel.Information
+        //        ).EnableSensitiveDataLogging();
+        //} //ESTO SE HARIA SI NO FUERA APP DE CAPAS
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

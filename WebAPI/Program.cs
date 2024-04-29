@@ -1,10 +1,20 @@
+using WebAPI.Application;
+using WebAPI.Persistence;
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddAplication();
+builder.Services.AddPersistence(builder.Configuration);
 
 // Add services to the container.
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+//builder.Services.AddMediatR(configuration =>
+//{
+//    configuration.RegisterServicesFromAssemblies(typeof(Program).Assembly);
+//}); //Comentado porque ahora lo hace dependecy injection
 
 var app = builder.Build();
 
