@@ -7,8 +7,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
+    <PackageReference Include="MediatR" Version="12.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\WebAPI.Domain\WebAPI.Domain.csproj" />
     <ProjectReference Include="..\WebAPI.Persistence\WebAPI.Persistence.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Cursos\CursoDelete\" />
+    <Folder Include="Cursos\CursoUpdate\" />
+    <Folder Include="Cursos\GetCurso\" />
+    <Folder Include="Cursos\GetCursos\" />
   </ItemGroup>
 
 </Project>

@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WebAPI.Persistence\WebAPI.Persistence.csproj" />
+    <ProjectReference Include="..\WebAPI.Application\WebAPI.Application.csproj" />
   </ItemGroup>
 
 </Project>
