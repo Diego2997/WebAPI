@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using WebAPI.Application;
+using WebAPI.Application.interfaces;
+using WebAPI.Infrastructure.Reports;
 using WebAPI.Persistence;
 using WebAPI.Persistence.Models;
 using WebAPI.WebAPI.Extensions;
@@ -8,6 +10,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddAplication();
 builder.Services.AddPersistence(builder.Configuration);
+//builder.Services.AddScoped<IReportService, ReportService>();
+//se haria de esta forma si no se estuviera utilizando genericos
+
+builder.Services.AddScoped(typeof(IReportService<>), typeof(ReportService<>));
+//hay que agregar la referencia de infra hacia api
 
 // Add services to the container.
 builder.Services.AddControllers();

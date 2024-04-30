@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.Application.Cursos.CursoCreate;
+using WebAPI.Application.Cursos.CursoReporteExcel;
 using static WebAPI.Application.Cursos.CursoCreate.CursoCreateCommand;
+using static WebAPI.Application.Cursos.CursoReporteExcel.CursoReporteExcelQuery;
 
 namespace WebAPI.Controllers
 {
@@ -24,6 +26,16 @@ namespace WebAPI.Controllers
             var command = new CursoCreateCommandRequest(request);
             var resultado = await sender.Send(command, cancellationToken);
             return Ok(resultado);
+        }
+
+
+        [HttpGet("reporte")]
+        public async Task<IActionResult> ReporteCSV(CancellationToken cancellationToken)
+        {
+            var query = new CursoReporteExcelQueryRequest();
+            var resultado =  await sender.Send(query,cancellationToken);
+            byte[] excelBytes = resultado.ToArray();
+            return File(excelBytes, "text/csv","cursos.csv");
         }
     }
 }
