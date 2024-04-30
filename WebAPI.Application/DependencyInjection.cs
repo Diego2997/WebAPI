@@ -1,9 +1,12 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using FluentValidation;
+using FluentValidation.AspNetCore;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WebAPI.Application.Cursos.CursoCreate;
 
 namespace WebAPI.Application
 {
@@ -15,6 +18,8 @@ namespace WebAPI.Application
             {
                 configuration.RegisterServicesFromAssembly(typeof(DependencyInjection).Assembly);
             });
+            services.AddFluentValidationAutoValidation();
+            services.AddValidatorsFromAssemblyContaining<CursoCreateCommand>();
             return services;
         }
     }

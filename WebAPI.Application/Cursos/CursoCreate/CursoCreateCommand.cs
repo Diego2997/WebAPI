@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using FluentValidation;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,6 +41,16 @@ namespace WebAPI.Application.Cursos.CursoCreate
                     FechaPublicacion = request.cursoCreateRequest.FechaPublicacion
                 };
 
+                if (request.cursoCreateRequest.InstructorId is not null)
+                {
+                    var instructor = await _context.Instructores!.FindAsync( request.cursoCreateRequest.InstructorId);
+                if(instructor is null)
+                {
+                    return Result<Guid>.Failure("El id del instructor no existe");
+                }
+
+                curso.Instructores = new List<Instructor>() { instructor };
+                }
                 _context.Add(curso);
 
                 var resultado = await _context.SaveChangesAsync(cancellationToken) > 0;
@@ -48,6 +59,15 @@ namespace WebAPI.Application.Cursos.CursoCreate
                     ? Result<Guid>.Success(curso.Id) 
                     : Result<Guid>.Failure("No se pudo insertar el curso");
                 
+            }
+        }
+
+        public class CursoCreateCommandRequestValidator
+            : AbstractValidator<CursoCreateCommandRequest>
+        {
+            public CursoCreateCommandRequestValidator()
+            {
+                RuleFor(x => x.cursoCreateRequest).SetValidator(new CursoCreateCommandValidator());
             }
         }
     }
