@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WebAPI.Application.Core;
 using WebAPI.Domain;
 using WebAPI.Persistence;
 
@@ -12,11 +13,11 @@ namespace WebAPI.Application.Cursos.CursoCreate
     public class CursoCreateCommand
     {
         public record CursoCreateCommandRequest(CursoCreateRequest cursoCreateRequest)
-        : IRequest<Guid>;
+        : IRequest<Result<Guid>>;
 
 
         internal class CursoCreateCommandHandler
-        : IRequestHandler<CursoCreateCommandRequest, Guid>
+        : IRequestHandler<CursoCreateCommandRequest, Result<Guid>>
         {
             private readonly ApplicationDbContext _context;
 
@@ -25,7 +26,7 @@ namespace WebAPI.Application.Cursos.CursoCreate
                 _context = context;
             }
 
-            public async Task<Guid> Handle(
+            public async Task<Result<Guid>> Handle(
                 CursoCreateCommandRequest request,
                 CancellationToken cancellationToken
             )
@@ -41,9 +42,12 @@ namespace WebAPI.Application.Cursos.CursoCreate
 
                 _context.Add(curso);
 
-                await _context.SaveChangesAsync(cancellationToken);
+                var resultado = await _context.SaveChangesAsync(cancellationToken) > 0;
 
-                return curso.Id;
+                return resultado 
+                    ? Result<Guid>.Success(curso.Id) 
+                    : Result<Guid>.Failure("No se pudo insertar el curso");
+                
             }
         }
     }

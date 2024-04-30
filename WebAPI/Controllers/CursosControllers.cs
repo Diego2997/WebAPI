@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using WebAPI.Application.Core;
 using WebAPI.Application.Cursos.CursoCreate;
 using WebAPI.Application.Cursos.CursoReporteExcel;
 using static WebAPI.Application.Cursos.CursoCreate.CursoCreateCommand;
@@ -20,12 +21,12 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("create")]
-        public async Task<ActionResult<Guid>> Post([FromForm] CursoCreateRequest request
+        public async Task<ActionResult<Result<Guid>>> Post([FromForm] CursoCreateRequest request
             ,CancellationToken cancellationToken)
         {
             var command = new CursoCreateCommandRequest(request);
-            var resultado = await sender.Send(command, cancellationToken);
-            return Ok(resultado);
+            return await sender.Send(command, cancellationToken);
+           
         }
 
 

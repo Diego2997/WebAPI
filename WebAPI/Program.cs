@@ -5,6 +5,7 @@ using WebAPI.Infrastructure.Reports;
 using WebAPI.Persistence;
 using WebAPI.Persistence.Models;
 using WebAPI.WebAPI.Extensions;
+using WebAPI.WebAPI.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,6 +37,7 @@ builder.Services.AddIdentityCore<AppUser>(opt =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+app.UseMiddleware<ExceptionMiddleware>();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
