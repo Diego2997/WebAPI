@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WebAPI.Application.Core;
 using WebAPI.Application.Cursos.CursoCreate;
 
 namespace WebAPI.Application
@@ -20,6 +21,8 @@ namespace WebAPI.Application
             });
             services.AddFluentValidationAutoValidation();
             services.AddValidatorsFromAssemblyContaining<CursoCreateCommand>();
+
+            services.AddAutoMapper(typeof(MappingProfile).Assembly);
             return services;
         }
     }

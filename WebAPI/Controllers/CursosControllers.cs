@@ -6,6 +6,7 @@ using WebAPI.Application.Cursos.CursoCreate;
 using WebAPI.Application.Cursos.CursoReporteExcel;
 using static WebAPI.Application.Cursos.CursoCreate.CursoCreateCommand;
 using static WebAPI.Application.Cursos.CursoReporteExcel.CursoReporteExcelQuery;
+using static WebAPI.Application.Cursos.GetCurso.GetCursoQuery;
 
 namespace WebAPI.Controllers
 {
@@ -29,6 +30,16 @@ namespace WebAPI.Controllers
            
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> CursoGet(
+            Guid id
+            ,CancellationToken cancellationToken)
+        {
+            var query = new GetCursoQueryRequest { Id = id };
+            var resultado = await sender.Send(query, cancellationToken);
+
+            return resultado.IsSuccess ? Ok(resultado.Value) : BadRequest();
+        }
 
         [HttpGet("reporte")]
         public async Task<IActionResult> ReporteCSV(CancellationToken cancellationToken)

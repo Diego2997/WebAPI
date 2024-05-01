@@ -16,10 +16,14 @@ namespace WebAPI.Application.Core
         {
             IsSuccess = true, Value = value
         };
-        public static Result<T> Failure(string error) => new Result<T>
+        public static Result<T> Failure(string error) //otra forma de hacer lo de arriba
         {
-            IsSuccess = false,
-            Error = error
-        };
+            return new Result<T>
+            {
+
+                IsSuccess = false,
+                Error = error
+            };
+        }
     }
 }

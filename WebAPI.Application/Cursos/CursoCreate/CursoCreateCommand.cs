@@ -13,8 +13,7 @@ namespace WebAPI.Application.Cursos.CursoCreate
 {
     public class CursoCreateCommand
     {
-        public record CursoCreateCommandRequest(CursoCreateRequest cursoCreateRequest)
-        : IRequest<Result<Guid>>;
+        public record CursoCreateCommandRequest(CursoCreateRequest cursoCreateRequest) : IRequest<Result<Guid>>;
 
 
         internal class CursoCreateCommandHandler
@@ -44,10 +43,11 @@ namespace WebAPI.Application.Cursos.CursoCreate
                 if (request.cursoCreateRequest.InstructorId is not null)
                 {
                     var instructor = await _context.Instructores!.FindAsync( request.cursoCreateRequest.InstructorId);
-                if(instructor is null)
-                {
-                    return Result<Guid>.Failure("El id del instructor no existe");
-                }
+
+                    if(instructor is null)
+                    {
+                        return Result<Guid>.Failure("El id del instructor no existe");
+                    }
 
                 curso.Instructores = new List<Instructor>() { instructor };
                 }
