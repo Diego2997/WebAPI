@@ -43,6 +43,7 @@ namespace WebAPI.Application.Cursos.GetCurso
                             .Include(x => x.Instructores)
                             .Include(x => x.Precios)
                             .Include(x => x.Calificaciones)
+                            .Include(x => x.Fotos)
                             .ProjectTo<CursoResponse>(mapper.ConfigurationProvider)
                             .FirstOrDefaultAsync();
 
