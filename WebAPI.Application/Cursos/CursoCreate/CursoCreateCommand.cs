@@ -42,15 +42,30 @@ namespace WebAPI.Application.Cursos.CursoCreate
 
                 if (request.cursoCreateRequest.InstructorId is not null)
                 {
-                    var instructor = await _context.Instructores!.FindAsync( request.cursoCreateRequest.InstructorId);
+                    var instructor =  _context.Instructores!.FirstOrDefault( x => x.Id == request.cursoCreateRequest.InstructorId);
 
                     if(instructor is null)
                     {
-                        return Result<Guid>.Failure("El id del instructor no existe");
+                        return Result<Guid>.Failure("No se encontro el instructor");
                     }
 
                 curso.Instructores = new List<Instructor>() { instructor };
                 }
+
+                if(request.cursoCreateRequest.PrecioId is not null)
+                {
+                    var precio = _context.Precios!.
+                        FirstOrDefault(x => x.Id == request.cursoCreateRequest.PrecioId);
+                   
+                    if(precio is null)
+                    {
+                        return Result<Guid>.Failure("No se encontro precio");
+                    }
+
+                    curso.Precios = new List<Precio>() { precio };
+                }
+
+
                 _context.Add(curso);
 
                 var resultado = await _context.SaveChangesAsync(cancellationToken) > 0;
